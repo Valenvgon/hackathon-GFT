@@ -1,9 +1,15 @@
-#! Variables para modulo de permisos de Github 
-variables "project_id" {
-    description = "ID del proyecto de GCP"
-    type = string 
+variable "project" {
+    description = "The GCP project ID where resources will be created"
+    type        = string
+  
 }
 
+variable "region" {
+    description = "The GCP region where resources will be created"
+    type        = string
+ 
+}
+  
 variables "wif_pool_name" {
     description = "nombre de la pool de identidad de trabajo (WIF) para Github Actions"
     type = string 
@@ -12,4 +18,3 @@ variables "wif_pool_name" {
 variables "github_repo" {
     description = "nombre del repositorio de Github"
     type = string
-}
