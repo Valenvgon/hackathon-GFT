@@ -22,14 +22,14 @@ variable "region" {
   
 }
 
-variable "bq_dataset" {
+variable "dataset_id" {
   type = string
 }
 
-variable "bq_table" {
+variable "table_id" {
   type = string 
 }
 
-variable "bq_location" {
+variable "location" {
   type = string 
 }

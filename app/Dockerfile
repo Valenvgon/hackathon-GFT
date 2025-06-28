@@ -1,29 +1,20 @@
-# ---------- Etapa de runtime ----------
-FROM python:3.12-slim AS runtime
+FROM python:3.10-slim
 
-# Evita que Python escriba .pyc y asegura logs en STDOUT.
-ENV PYTHONDONTWRITEBYTECODE=1 \
-    PYTHONUNBUFFERED=1
-
-# Instala dependencias de sistema mínimas (libpq-dev por si usas Postgres).
-RUN apt-get update \
- && apt-get install -y --no-install-recommends gcc libpq-dev \
- && rm -rf /var/lib/apt/lists/*
-
-# Crea un usuario no-root y carpeta de trabajo.
-RUN useradd -m appuser
+# Establece directorio de trabajo
 WORKDIR /app
-COPY --chown=appuser:appuser requirements.txt ./
 
-# Instala libs de Python sin caché.
-RUN pip install --no-cache-dir --upgrade pip \
- && pip install --no-cache-dir -r requirements.txt
+# Copia los archivos necesarios
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
 
-# Copia el código fuente.
-COPY --chown=appuser:appuser api.py ./
+# Copia el resto del código
+COPY . .
 
-USER appuser
-
-# Expone el puerto que Cloud Run inyectará en $PORT (por defecto 8080).
+# Expone el puerto que usará Cloud Run
 EXPOSE 8080
-CMD ["gunicorn", "-b", "0.0.0.0:${PORT:-8080}", "api:app"]
+
+# Variable obligatoria para Cloud Run
+ENV PORT 8080
+
+# Comando de arranque (adaptado para Flask en Cloud Run)
+CMD ["gunicorn", "-b", ":8080", "app:app"]

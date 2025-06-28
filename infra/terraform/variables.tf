@@ -27,3 +27,13 @@ variable "bigquery_viewer_email" {
     type        = string
 }
 
+variable "dataset_id" {
+    description = "The BigQuery dataset ID"
+    type        = string
+}
+
+variable "table_id" {
+    description = "The BigQuery table ID"
+    type        = string
+}
+
