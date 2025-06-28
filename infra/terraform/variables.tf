@@ -10,3 +10,19 @@ variable "region" {
  
 }
   
+variable "repo" {
+    description = "The Docker repository name"
+    type        = string
+  
+}
+
+variable "path_dockerfile" {
+    description = "The path to the Dockerfile"
+    type        = string
+  
+}
+
+variable "bigquery_viewer_email" {
+    description = "The email of the BigQuery viewer service account"
+    type        = string
+}
