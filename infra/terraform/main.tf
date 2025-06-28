@@ -31,5 +31,6 @@ module "bigquery" {
     dataset_id = var.dataset_id
     table_id = var.table_id
     region = var.region
+    table_id_login = var.table_id_login
 
 }

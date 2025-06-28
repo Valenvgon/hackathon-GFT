@@ -50,10 +50,37 @@ def ingest():
 
     try:
         errors = bq_client.insert_rows_json(table_ref, [row])
-        if errors:                                  # ← lista de dicts con errores
+        if errors:                                 
             raise BadRequest(str(errors))
     except (BadRequest, Forbidden, NotFound) as exc:
-        # Devuelve detalles del fallo al emisor para depuración
+        
+        return jsonify(error=f"BigQuery insert error: {exc}"), 400
+
+    return jsonify(status="success"), 202
+
+@app.route("/login", methods=["POST"])
+def login():
+    """Recibe JSON con el login y lo inserta como nueva fila en BigQuery."""
+    if not request.is_json:
+        return jsonify(error="Content-Type debe ser application/json"), 415
+    
+    payload = request.get_json(silent=True)
+    if payload is None:
+        return jsonify(error="JSON malformado"), 400
+    
+    row = {
+        "nombre": payload.get("nombre"),
+        "mac_adress": payload.get("mac_adress"),
+        "email": payload.get("email"),
+        "rol": payload.get("rol"),
+        "timestamp": payload.get(),
+    }
+
+    try:
+        errors = bq_client.insert_rows_json(table_ref, [row])
+        if errors:
+            raise BadRequest(str(errors))
+    except (BadRequest, Forbidden, NotFound) as exc:
         return jsonify(error=f"BigQuery insert error: {exc}"), 400
 
     return jsonify(status="success"), 202

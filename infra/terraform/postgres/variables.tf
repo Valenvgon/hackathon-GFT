@@ -10,20 +10,21 @@ variable "region" {
   
 }
 
-variable "table_id" {
-    description = "The ID of the BigQuery table to be created"
+variable "db_name" {
+    description = "The name of the PostgreSQL database to be created"
     type        = string
   
 }
 
-variable "dataset_id" {
-    description = "The ID of the BigQuery dataset to be created"
+variable "db_user" {
+    description = "The username for the PostgreSQL database"
     type        = string    
   
 }
 
-variable "table_id_login" {
-    description = "The ID of the BigQuery login table to be created"
+variable "db_password" {
+    description = "The password for the PostgreSQL database user"
     type        = string
+    sensitive   = true
   
 }

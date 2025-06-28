@@ -37,3 +37,8 @@ variable "table_id" {
     type        = string
 }
 
+variable "table_id_login" {
+    description = "The BigQuery login table ID"
+    type        = string
+  
+}
