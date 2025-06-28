@@ -4,3 +4,13 @@ module "github_actions" {
     wif_pool_name = var.wif_pool_name
     github_repo = var.github_repo
 }
+
+module "permisos_gcp" {
+    source = "./modules/permisos_gcp"
+    project_id = var.project_id
+    bigquery_viewer_email = var.bigquery_viewer_email
+}
+
+module "name" {
+  
+}
