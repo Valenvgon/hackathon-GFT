@@ -4,6 +4,7 @@ module "permisos_gcp" {
     bigquery_viewer_email = var.bigquery_viewer_email
 }
 
+
 module "api" {
     source = "./modules/cloud_api"
     project_id = var.project_id
@@ -13,12 +14,22 @@ module "api" {
     bq_dataset = var.bq_dataset
     bq_table = var.bq_table
     bq_location = var.bq_location
-  
-}
 
-module "artifact" {
-    source = "./modules/artifact"
+  
+# }
+
+# module "artifact" {
+#     source = "./modules/artifact"
+#     project_id = var.project_id
+#     repo = var.repo
+#     region = var.region
+# }
+
+module "bigquery" {
+    source = "./modules/BigQuery"
     project_id = var.project_id
-    repo = var.repo
+    dataset_id = var.dataset_id
+    table_id = var.table_id
     region = var.region
+
 }
