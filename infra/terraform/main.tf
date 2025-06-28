@@ -10,6 +10,9 @@ module "api" {
     repo = var.repo
     path_dockerfile = var.path_dockerfile
     region = var.region
+    bq_dataset = var.bq_dataset
+    bq_table = var.bq_table
+    bq_location = var.bq_location
   
 }
 
