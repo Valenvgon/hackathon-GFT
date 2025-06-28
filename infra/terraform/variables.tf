@@ -27,14 +27,3 @@ variable "bigquery_viewer_email" {
     type        = string
 }
 
-variable "dataset_id" {
-    description = "The ID of the BigQuery dataset to be created"
-    type        = string
-  
-}
-
-variable "table_id" {
-    description = "The ID of the BigQuery table to be created"
-    type        = string
-  
-}
