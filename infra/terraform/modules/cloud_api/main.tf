@@ -4,9 +4,9 @@ resource "google_service_account" "cloud_run_service_account" {
   project      = var.project_id
 }
 
-resource "google_project_iam_member" "cloudsql_client" {
+resource "google_project_iam_member" "bigquery_editor" {
   project = var.project_id
-  role    = "roles/cloudsql.client"
+  role    = "roles/bigquery.dataEditor"
   member  = "serviceAccount:${google_service_account.cloud_run_service_account.email}"
 }
 

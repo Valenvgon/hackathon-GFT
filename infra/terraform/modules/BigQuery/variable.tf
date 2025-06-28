@@ -21,3 +21,9 @@ variable "dataset_id" {
     type        = string    
   
 }
+
+variable "table_id_login" {
+    description = "The ID of the BigQuery login table to be created"
+    type        = string
+  
+}
