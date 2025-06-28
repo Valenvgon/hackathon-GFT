@@ -10,19 +10,3 @@ variable "region" {
  
 }
   
-variable "wif_pool_name" {
-    description = "nombre de la pool de identidad de trabajo (WIF) para Github Actions"
-    type = string 
-}
-
-variable "github_repo" {
-    description = "nombre del repositorio de Github"
-    type = string
-
-}
-
-variable "bigquery_viewer_email" {
-    description = "Email del usuario que tendrá acceso de solo lectura a BigQuery"
-    type        = string
-  
-}
