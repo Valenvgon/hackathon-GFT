@@ -1,4 +1,3 @@
-#! Variables para modulo de permisos de Github 
 variables "project_id" {
     description = "ID del proyecto de GCP"
     type = string 
@@ -13,3 +12,6 @@ variables "github_repo" {
     description = "nombre del repositorio de Github"
     type = string
 }
+
+
+
