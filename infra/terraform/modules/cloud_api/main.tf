@@ -12,10 +12,10 @@ resource "google_project_iam_member" "cloudsql_client" {
 
 resource "null_resource" "docker_build" {
   provisioner "local-exec" {
+    working_dir = var.path_dockerfile
     command = <<EOL
-      docker build --platform linux/amd64 -t api ${var.path_dockerfile}
-      docker tag api europe-west1-docker.pkg.dev/${var.project_id}/${var.repo}/str-api:latest
-      docker push europe-west1-docker.pkg.dev/${var.project_id}/${var.repo}/str-api:latest
+      docker build --platform=linux/amd64 -t  europe-west1-docker.pkg.dev/${var.project_id}/${var.repo}/gft:latest .
+      docker push europe-west1-docker.pkg.dev/${var.project_id}/${var.repo}/gft:latest
     EOL
   }
 }
@@ -29,7 +29,28 @@ resource "google_cloud_run_service" "default" {
       service_account_name = google_service_account.cloud_run_service_account.email
 
       containers {
-        image = "europe-west1-docker.pkg.dev/${var.project_id}/${var.repo}/str-api:latest"
+        image = "europe-west1-docker.pkg.dev/${var.project_id}/${var.repo}/gft:latest"
+
+        env {
+          name  = "PROJECT_ID"
+          value = var.project_id            # p.ej. "datos_iot"
+        }
+        
+        env {
+          name  = "BQ_DATASET"
+          value = var.dataset_id            # p.ej. "datos_iot"
+        }
+
+        env {
+          name  = "BQ_TABLE"
+          value = var.table_id              # p.ej. "lecturas"
+        }
+
+        env {
+          name  = "BQ_LOCATION"
+          value = var.location           # p.ej. "EU"
+        }
+
       }
     }
   }
