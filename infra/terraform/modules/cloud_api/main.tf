@@ -12,6 +12,7 @@ resource "google_project_iam_member" "cloudsql_client" {
 
 resource "null_resource" "docker_build" {
   provisioner "local-exec" {
+    working_dir = "${path.module}/../../../../app"
     command = <<EOL
       docker build --platform linux/amd64 -t api ${var.path_dockerfile}
       docker tag api europe-west1-docker.pkg.dev/${var.project_id}/${var.repo}/str-api:latest
@@ -30,6 +31,31 @@ resource "google_cloud_run_service" "default" {
 
       containers {
         image = "europe-west1-docker.pkg.dev/${var.project_id}/${var.repo}/str-api:latest"
+
+        env {
+          name  = "PROJECT_ID"
+          value = var.project_id            # p.ej. "datos_iot"
+        }
+        
+        env {
+          name  = "BQ_DATASET"
+          value = var.bq_dataset            # p.ej. "datos_iot"
+        }
+
+        env {
+          name  = "BQ_TABLE"
+          value = var.bq_table              # p.ej. "lecturas"
+        }
+
+        env {
+          name  = "BQ_LOCATION"
+          value = var.bq_location           # p.ej. "EU"
+        }
+
+        env {
+          name  = "PORT"
+          value = "8080"
+        }
       }
     }
   }

@@ -21,3 +21,15 @@ variable "region" {
   type        = string
   
 }
+
+variable "bq_dataset" {
+  type = string
+}
+
+variable "bq_table" {
+  type = string 
+}
+
+variable "bq_location" {
+  type = string 
+}
